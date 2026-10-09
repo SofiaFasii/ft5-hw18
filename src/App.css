@@ -1,0 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+h1{
+  font-size: 30px;
+}
+.wrapper{
+  padding: 15px;
+}
+.box{
+  padding-top: 20px;
+  display: flex;
+  gap: 10px;
+}
