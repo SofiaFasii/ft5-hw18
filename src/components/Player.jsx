@@ -1,14 +1,13 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { PlayerContext } from "../Context/playerContext";
 
 export default function Player(){
-    const  {isPlaying, setIsPlaying} = useContext(PlayerContext);
-    const [musicSecon, setMusicSecon] = useState(0)
-    const [musicDuration, setMusicDuration] = useState(0)
+    const {state, dispatch} = useContext(PlayerContext);
+    const {isPlaying, musicSecon, musicDuration} = state
 
     const audioRef = useRef(null)
     const togglePlay = () => {
-        setIsPlaying(!isPlaying)
+        dispatch({type: 'toggle-play'})
         if(isPlaying === false){
             audioRef.current.play()
         } else{
@@ -16,13 +15,19 @@ export default function Player(){
         }
     }
     const timeUpdate = () => {
-        setMusicSecon(audioRef.current.currentTime)
+        dispatch({
+            type: 'time-update',
+            payload: audioRef.current.currentTime,
+        })
     }
     const timeDuration = () => {
-        setMusicDuration(audioRef.current.duration)
+        dispatch({
+            type: 'time-duration',
+            payload: audioRef.current.duration,
+        })
     }
     const handleEnded = () => {
-        setIsPlaying(false)
+        dispatch({type: 'ended'})
     }
     function format(seconds){
         const minutes = Math.floor(seconds / 60)
